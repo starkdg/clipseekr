@@ -1,0 +1,8 @@
+02/10/2016  apply double threshold for shot detection
+            default settings at 1.0 which means shot detection is shut off
+            (color histogram difference and ecr thresholds)
+			ability to detect sequence of n black frames
+02/03/2016  add edge cut ratio (ecr) shot detection
+            turn off hash look ups while a clip is found
+01/22/2016  add crop option to clipster
+01/22/2016  version 1.6.0

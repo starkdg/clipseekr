@@ -1,0 +1,3 @@
+// configure options for ClipSeekr project
+#define ClipSeekr_VERSION_MAJOR @ClipSeekr_VERSION_MAJOR@
+#define ClipSeekr_VERSION_MINOR @ClipSeekr_VERSION_MINOR@
