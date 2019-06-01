@@ -50,10 +50,10 @@ See all options for above programs with `./clipster --help` and `./clipseekr --h
 
 Be sure to compile OpenCV with gtk2.0 support!
 
-[OpenCV 3.4.6](https://github.com/opencv/opencv/tree/3.4.6) \\
+[OpenCV 3.4.6](https://github.com/opencv/opencv/tree/3.4.6)\
 [ffmpeg 2.6.9](https://ffmpeg.org/releases/ffmpeg-2.6.9.tar.xz)
 
 These will be auto-downloaded by cmake script:
 
-[Boost 1.62.0](URL https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.gz) \\
+[Boost 1.62.0](URL https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.gz)\
 [phvideocapture](https://github.com/starkdg/phvideocapture)
