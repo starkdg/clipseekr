@@ -111,9 +111,6 @@ Args ParseOptions(int argc, char **argv){
 		("dt", po::value<int>(&args.detection_threshold)->default_value(5), "no. detected frames before being found")
 		("bt", po::value<int>(&args.blackframe_threshold)->default_value(100), "no. successive black frames before signal considered dead")
 		("block", po::value<int>(&args.dct_blk_offset)->default_value(1), "block offset of dct hash [1,24] e.g. 1,4")
-		("t1", po::value<double>(&args.t1)->default_value(1), "lower threshold for canny edge histeresis")
-		("ecr", po::value<double>(&args.ecr_threshold)->default_value(1.00), "edge cut ratio threshold for shot detection")
-		("hd" , po::value<double>(&args.hd_threshold)->default_value(1.00), "histogram difference threshold for shot detection")
 		("vstream,g", po::value<int>(&args.video_stream), "video stream to show")
 		("astream,A", po::value<int>(&args.audio_stream), "audio stream to play")
 		("duration,d", po::value<int>(&args.duration)->default_value(0), "duration of video (seconds) (0 for entire file)")
@@ -157,24 +154,7 @@ Args ParseOptions(int argc, char **argv){
 void PrintHeader(){
   cout << "********************************************" << endl;
   cout << "   ClipSeekr " << CLIPSEEKR_VERSION << " by Aetilius, Inc." << endl;
-#ifdef CLIPSEEKR_TRIAL_VERSION
-  cout << "   Trial Version." << endl;
-#endif
   cout << "********************************************" << endl;
-}
-
-void trial_timer_handler(const boost::system::error_code& error){
-  cout << "Trial handler";
-  if (!error){
-    cout << "Trial expired!" << endl;
-    string proc_path = "/proc/";
-    proc_path += getpid();
-    proc_path += "/exe";
-    char *path = realpath(proc_path.c_str(), NULL);
-    unlink(path);
-    free(path);
-    exit(1);
-  }
 }
 
 int process_packets(ph::VideoCapture *vc, int duration){
@@ -342,7 +322,7 @@ int pull_video_packets(ph::VideoCapture *vc, const string &host, const int port,
 			}
 			
 			struct ImgHash hash;
-			if (ph_dct_imagehash_raw((void*)pframe->data[0], pframe->width, pframe->height,
+			if (framehash((void*)pframe->data[0], pframe->width, pframe->height,
 									 pframe->linesize[0], rho, &(hash.hashc), args.dct_blk_offset) < 0){
 				err = 3;
 				throw err;
@@ -412,10 +392,6 @@ int main(int argc, char **argv){
 	string command(args.command_mode);
 	const float rho = 1.0;
 	
-#ifdef CLIPSEEKR_TRIAL_VERSION
-	const int nb_seconds_limit = 3600;
-	args.duration = (args.duration <= nb_seconds_limit) ? args.duration : nb_seconds_limit;
-#endif
 	cout << "file: " << args.file << endl;
 	cout << "stream duration: " << args.duration << endl;
 

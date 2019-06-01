@@ -19,5 +19,6 @@ void frame_hist(AVFrame *pframe, int hist[], int N);
 
 double hist_diff(int hist[], int prevhist[], int N);
 
+int framehash(void *data, int width, int height, int widthstep, float rho, uint64_t *hash , int blk_idx);
 
 #endif /* CLIPSEEKR_UTILS_H */

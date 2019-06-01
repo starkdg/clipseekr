@@ -2,6 +2,8 @@
 #include <cstring>
 #include <cmath>
 #include "clipseekrutils.h"
+#include <opencv2/core/core_c.h>
+#include <opencv2/imgproc/imgproc_c.h>
 
 using namespace std;
 
@@ -76,4 +78,57 @@ double hist_diff(int hist[], int prevhist[], int N){
 	}
 	return acc/sum;
 }
+
+static int _framehash(void *iplimg, float rho, uint64_t *hash, int blk_idx=1) {
+	if (!iplimg || !hash) return -1;
+
+	*hash = 0;
+	IplImage *img = (IplImage*)iplimg;
+	IplImage *imgplane   = cvCreateImage(cvSize(img->width, img->height), img->depth, 1);
+	IplImage *imgblurred = cvCreateImage(cvSize(img->width, img->height), img->depth, 1);
+	IplImage *imgresized = cvCreateImage(cvSize(32,32), img->depth, 1);
+	IplImage *imgprime   = cvCreateImage(cvSize(32,32), IPL_DEPTH_32F, 1);
+	IplImage *dctimg     = cvCreateImage(cvSize(32,32), IPL_DEPTH_32F, 1);
+
+	cvSplit(img, imgplane, NULL, NULL, NULL);
+	cvSmooth(imgplane, imgblurred, CV_GAUSSIAN, 3, 0, rho, rho);
+	cvResize(imgblurred, imgresized, CV_INTER_AREA);
+
+	cvConvertScale(imgresized, imgprime, 1, 0);
+	cvDCT(imgprime, dctimg, 0);
+
+	double minval, maxval, medianval;
+	cvSetImageROI(dctimg, cvRect(blk_idx,blk_idx,blk_idx+8,blk_idx+8));
+	cvMinMaxLoc(dctimg, &minval, &maxval, NULL, NULL, NULL);
+	medianval = (maxval+minval)/2;
+	
+	uint64_t hashval = 0;
+	for (int i=1;i<=8;i++){
+	    const float *row = (const float*)(dctimg->imageData + i*dctimg->widthStep);
+	    for (int j=1;j<=8;j++, hashval <<= 1){
+			if (row[j] > medianval){
+				hashval |= 1;
+			}
+	    }
+	}
+	*hash = hashval;
+				 
+	cvReleaseImage(&imgplane);
+	cvReleaseImage(&imgblurred);
+	cvReleaseImage(&imgresized);
+	cvReleaseImage(&imgprime);
+	cvReleaseImage(&dctimg);
+	return 0;
+}
+
+int framehash(void *data, int width, int height, int widthstep, float rho, uint64_t *hash , int blk_idx){
+	if (data == NULL || hash == NULL) return -1;
+	IplImage *img = cvCreateImageHeader(cvSize(width, height), IPL_DEPTH_8U, 1);
+	if (img == NULL) return -1;
+	cvSetData(img, data, widthstep);
+	int rc = _framehash(img, rho, hash);
+	cvReleaseImageHeader(&img);
+	return rc;
+}
+
 

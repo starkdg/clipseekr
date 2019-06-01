@@ -19,6 +19,7 @@
 #include <pHashPro.h>
 #include "TableEntry.hpp"
 #include "RedisHashStore.hpp"
+#include "clipseekrutils.h"
 
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
@@ -125,7 +126,7 @@ void process_video(ph::VideoCapture *vc, string id, int idnum, int total, HashSt
 			entry.seqnum = count++;
 			struct ImgHash hash;
 			hash.hashc = 0;
-			if (ph_dct_imagehash_raw(pframe->data[0], pframe->width, pframe->height,
+			if (framehash(pframe->data[0], pframe->width, pframe->height,
 									 pframe->linesize[0], rho, &hash.hashc, blk_idx) < 0){
 				throw runtime_error("unable to calculate hash value");
 			}
