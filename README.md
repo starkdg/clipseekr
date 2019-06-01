@@ -59,3 +59,5 @@ These will be auto-downloaded by cmake script:
 [Boost libs v1.62.0](URL https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.gz)\
 
 [phvideocapture v0.0.1](https://github.com/starkdg/phvideocapture)
+
+[hiredis v0.9.0](https://github.com/redis/hiredis/archive/v0.9.0.tar.gz)
