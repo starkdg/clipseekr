@@ -56,6 +56,6 @@ Be sure to compile OpenCV with gtk2.0 support!
 
 These will be auto-downloaded by cmake script:
 
-[Boost 1.62.0](URL https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.gz)\
+[Boost libs v1.62.0](URL https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.gz)\
 
-[phvideocapture](https://github.com/starkdg/phvideocapture)
+[phvideocapture v0.0.1](https://github.com/starkdg/phvideocapture)
