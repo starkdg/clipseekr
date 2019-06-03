@@ -1,12 +1,3 @@
-This software is licensed in the name of phash.org. All enquiries
-shall be directed to the following:
-
-support@phash.org
-Evan Klinger eklinger@phash.org, eklinger@gmail.com
-David Starkweather starkd88@gmail.com
-
-----------------------------------------------------------------------
-
 		GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

@@ -5,6 +5,8 @@ sequence detection. It encompasses two programs: (1) clipster, for the
 purpose of indexing a set of short video clips, and (2) clipseekr, a program
 to monitor a given stream for the occurence of previously indexed clips.
 
+Read the blog post about it here: [blog](http://blog.phash.org/posts/ClipSeekr-VideoClipDetection)
+
 ## Install
 
 cmake .
@@ -15,6 +17,7 @@ Set installation locations of ffmpeg and opencv by setting cmake variables
 FFMPEG_DIR and OPENCV_DIR. You can do this with `cmake-gui .`
 
 Make sure opencv is compiled with gtk2.0 support.
+
 
 ## Usage
 
