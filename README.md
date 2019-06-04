@@ -9,9 +9,11 @@ Read the blog post about it here: [blog](http://blog.phash.org/posts/ClipSeekr-V
 
 ## Install
 
+```
 cmake .
 make all
 sudo make install
+```
 
 Set installation locations of ffmpeg and opencv by setting cmake variables
 FFMPEG_DIR and OPENCV_DIR. You can do this with `cmake-gui .`
